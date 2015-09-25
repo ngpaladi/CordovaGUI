@@ -1,0 +1,24 @@
+﻿<Window x:Class="CordovaGUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApplication1"
+        mc:Ignorable="d"
+        Title="Cordova" Height="631" Width="608" Background="#1f1f1f" Icon="cordova_bot.ico">
+    <Window.Resources>
+        <Style x:Key="GridStyle1" TargetType="{x:Type Grid}"/>
+    </Window.Resources>
+    <Grid>
+        <Button x:Name="newProject" FontSize="25" Background="#1F1F1F" Content="New Project &#x000D;         &#x2386;" Foreground="White" HorizontalAlignment="Left" Margin="400,0,0,400" VerticalAlignment="Bottom" Width="200" Height="200" RenderTransformOrigin="0.49,0.49" BorderThickness="0,0,0,0"/>
+        <Button x:Name="openProject" FontSize="25" Background="#1F1F1F" Content="Open Project &#x000D;         &#x2386;" Foreground="White" HorizontalAlignment="Left" Margin="400,0,0,200" VerticalAlignment="Bottom" Width="200" Height="200" RenderTransformOrigin="0.49,0.49" BorderThickness="0"/>
+        <Button x:Name="buildProject" FontSize="25" Background="#1F1F1F" Content="Build Project &#x000D;         &#x2386;" Foreground="White" HorizontalAlignment="Left" Margin="400,0,0,000" VerticalAlignment="Bottom" Width="200" Height="200" RenderTransformOrigin="0.49,0.49" BorderThickness="0,0,0,0"/>
+        <Button x:Name="image" HorizontalAlignment="Left" Height="400" VerticalAlignment="Top" Width="400" Background="#1f1f1f" Margin="00,0,0,000" BorderThickness="0">
+            <Image x:Name="cordovaBot" Source="Cordova-Big.png" Width="287" Height="332"/>
+        </Button>
+        <Button x:Name="cordovaPlugins" FontSize="25"  Background="#1F1F1F" Content="Cordova Plugins &#x000D;         &#x2386;" Foreground="White" HorizontalAlignment="Left" Margin="200,0,0,000" VerticalAlignment="Bottom" Width="200" Height="200" RenderTransformOrigin="0.49,0.49" BorderThickness="0,0,0,0"/>
+        <Button x:Name="updateCordova" FontSize="25" Background="#1F1F1F" Content="Update Cordova &#x000D;         &#x2386;" Foreground="White" HorizontalAlignment="Left" Margin="0,0,0,000" VerticalAlignment="Bottom" Width="200" Height="200" RenderTransformOrigin="0.49,0.49" BorderThickness="0,0,0,0"/>
+    </Grid>
+
+    <!--<Grid Style="{DynamicResource GridStyle1}"/>-->
+</Window>
