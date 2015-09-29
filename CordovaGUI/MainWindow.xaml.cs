@@ -42,7 +42,8 @@ namespace CordovaGUI
         private void UpdateCordova_Click(object sender, RoutedEventArgs e)
         {
             //throw new NotImplementedException();
-            CurrentSession.submitCMD("npm install -g cordova@latest");
+            //CurrentSession.submitCMD("npm install -g cordova@latest");
+            Process.Start("npm", "install -g cordova@latest");
         }
 
         private void CordovaPlugins_Click(object sender, RoutedEventArgs e)

@@ -32,10 +32,10 @@ namespace CordovaGUI
             reverseDomain = "com." + username + "." + projectName;
 
             //create project and .cdp file
-            string toCMD1 = "cd " + projectPath;
-            submitCMD(toCMD1);
-            string toCMD2 = "cordova create " + projectName + " " + reverseDomain + " " + projectName;
-            submitCMD(toCMD1);
+            //string toCMD1 = "cd " + projectPath;
+            //submitCMD("cmd.exe", toCMD1);
+            string toCMD2 = "create " + projectName + " " + reverseDomain + " " + projectName;
+            submitCMD("cordova", toCMD2);
             string[] lines = { name, reverseDomain, createTimeString, buildTimeString };
             System.IO.File.WriteAllLines(@cdpPath, lines);
         }

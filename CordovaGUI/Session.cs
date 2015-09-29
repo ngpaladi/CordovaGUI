@@ -21,12 +21,12 @@ namespace CordovaGUI
             var timeSpan = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
             return (long)timeSpan.TotalSeconds;
         }
-        public void submitCMD(string args)
+        public void submitCMD(string pgm, string args)
         {
             System.Diagnostics.Process process = new System.Diagnostics.Process();
             System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
             startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-            startInfo.FileName = "cmd.exe";
+            startInfo.FileName = pgm;
             startInfo.Arguments = args;
             process.StartInfo = startInfo;
             process.Start();
