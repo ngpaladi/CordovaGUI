@@ -38,12 +38,31 @@ namespace CordovaGUI
 
 
         }
+        public void submitCMD(string pgm, string args, bool show)
+        {
+            System.Diagnostics.Process process = new System.Diagnostics.Process();
+            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+            if (!show)
+            {
+                startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            }
+            else
+            {
+                startInfo.WindowStyle = ProcessWindowStyle.Minimized;
+            }
+            startInfo.FileName = pgm;
+            startInfo.Arguments = args;
+            process.StartInfo = startInfo;
+            process.Start();
+           // Process.Start(pgm, args);
+
+        }
 
         private void UpdateCordova_Click(object sender, RoutedEventArgs e)
         {
             //throw new NotImplementedException();
-            //CurrentSession.submitCMD("npm install -g cordova@latest");
-            Process.Start("npm", "install -g cordova@latest");
+            submitCMD("npm", "install -g cordova@latest", true);
+            //Process.Start("npm", "install -g cordova@latest");
         }
 
         private void CordovaPlugins_Click(object sender, RoutedEventArgs e)
