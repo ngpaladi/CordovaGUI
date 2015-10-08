@@ -31,8 +31,8 @@ namespace CordovaGUI
             image.Click += Image_Click;
             newProject.Click += NewProject_Click;
             openProject.Click += OpenProject_Click;
-            buildProject.Click += BuildProject_Click;
-            cordovaPlugins.Click += CordovaPlugins_Click;
+            buildIOS.Click += BuildIOS_Click;
+            buildAndroid.Click += BuildAndroid_Click;
             updateCordova.Click += UpdateCordova_Click;
 
 
@@ -40,8 +40,8 @@ namespace CordovaGUI
         }
         public void submitCMD(string pgm, string args, bool show)
         {
-            System.Diagnostics.Process process = new System.Diagnostics.Process();
-            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo();
             if (!show)
             {
                 startInfo.WindowStyle = ProcessWindowStyle.Hidden;
@@ -58,6 +58,27 @@ namespace CordovaGUI
 
         }
 
+        public void submitCMD(string pgm, string args, bool show, string dir)
+        {
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            if (!show)
+            {
+                startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            }
+            else
+            {
+                startInfo.WindowStyle = ProcessWindowStyle.Minimized;
+            }
+            startInfo.FileName = pgm;
+            startInfo.Arguments = args;
+            startInfo.WorkingDirectory = dir;
+            process.StartInfo = startInfo;
+            process.Start();
+            // Process.Start(pgm, args);
+
+        }
+
         private void UpdateCordova_Click(object sender, RoutedEventArgs e)
         {
             //throw new NotImplementedException();
@@ -65,12 +86,12 @@ namespace CordovaGUI
             //Process.Start("npm", "install -g cordova@latest");
         }
 
-        private void CordovaPlugins_Click(object sender, RoutedEventArgs e)
+        private void BuildAndroid_Click(object sender, RoutedEventArgs e)
         {
             //throw new NotImplementedException();
         }
 
-        private void BuildProject_Click(object sender, RoutedEventArgs e)
+        private void BuildIOS_Click(object sender, RoutedEventArgs e)
         {
             //throw new NotImplementedException();
         }
