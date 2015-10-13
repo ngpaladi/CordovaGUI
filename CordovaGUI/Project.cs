@@ -19,7 +19,7 @@ namespace CordovaGUI
         private string reverseDomain;
         private string username;
 
-        public void newProject(string projectName, string projectPath)
+        public void makeNewProject(string projectName, string projectPath)
         {
             path = projectPath;
             name = projectName;
@@ -35,7 +35,7 @@ namespace CordovaGUI
             //string toCMD1 = "cd " + projectPath;
             //submitCMD("cmd.exe", toCMD1);
             string toCMD2 = "create " + projectName + " " + reverseDomain + " " + projectName;
-            submitCMD("cordova", toCMD2, true);
+            submitCMD("cordova", toCMD2, projectPath, true);
             string[] lines = { name, reverseDomain, createTimeString, buildTimeString };
             System.IO.File.WriteAllLines(@cdpPath, lines);
         }

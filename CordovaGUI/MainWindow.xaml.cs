@@ -38,7 +38,7 @@ namespace CordovaGUI
 
 
         }
-        public void submitCMD(string pgm, string args, bool show)
+        public void submitCMD(string pgm, string args, string dir,  bool show)
         {
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
@@ -51,6 +51,7 @@ namespace CordovaGUI
                 startInfo.WindowStyle = ProcessWindowStyle.Minimized;
             }
             startInfo.FileName = pgm;
+            startInfo.WorkingDirectory = dir;
             startInfo.Arguments = args;
             process.StartInfo = startInfo;
             process.Start();
@@ -82,7 +83,7 @@ namespace CordovaGUI
         private void UpdateCordova_Click(object sender, RoutedEventArgs e)
         {
             //throw new NotImplementedException();
-            submitCMD("npm", "install -g cordova@latest", true);
+            submitCMD("npm", "install -g cordova@latest", "", true);
             //Process.Start("npm", "install -g cordova@latest");
         }
 

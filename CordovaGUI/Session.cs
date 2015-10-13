@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace CordovaGUI
 {
-    public class Session
+    public class Session : MainWindow
     {
         private long startTime;
         private long endTime;
@@ -26,26 +26,26 @@ namespace CordovaGUI
             return (long)timeSpan.TotalSeconds;
         }
 
-        public void submitCMD(string pgm, string args, bool show)
+       /* public void submitCMD(string pgm, string args, bool show)
         {
-            /*System.Diagnostics.Process process = new System.Diagnostics.Process();
-            //System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-            /*if (!show)
+            System.Diagnostics.Process process = new System.Diagnostics.Process();
+            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+            if (!show)
             {
-                processStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             }
             else
             {
-                processStartInfo.WindowStyle = ProcessWindowStyle.Minimized;
+                startInfo.WindowStyle = ProcessWindowStyle.Minimized;
             }
-            processStartInfo.FileName = pgm;
-            processStartInfo.Arguments = args;
-            process.StartInfo = processStartInfo;
-            process.Start();*/
+            startInfo.FileName = pgm;
+            startInfo.Arguments = args;
+            process.StartInfo = startInfo;
+            process.Start();
             Process.Start(pgm, args);
 
         }
-
+        */
         ~Session()
         {
             endTime = UnixTimeNow();
