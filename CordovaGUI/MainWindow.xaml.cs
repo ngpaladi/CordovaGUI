@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace CordovaGUI
 {
@@ -22,7 +23,6 @@ namespace CordovaGUI
     public partial class MainWindow : Window
     {
         public Session CurrentSession;
-        // public Project CurrentProject;
 
         public MainWindow()
         {
@@ -37,6 +37,11 @@ namespace CordovaGUI
 
 
 
+        }
+        public long UnixTimeNow()
+        {
+            var timeSpan = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
+            return (long)timeSpan.TotalSeconds;
         }
         public void submitCMD(string pgm, string args, string dir,  bool show)
         {
@@ -59,7 +64,7 @@ namespace CordovaGUI
 
         }
 
-        public void submitCMD(string pgm, string args, bool show, string dir)
+        public void submitCMD(string pgm, string args, bool show)
         {
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
@@ -73,7 +78,6 @@ namespace CordovaGUI
             }
             startInfo.FileName = pgm;
             startInfo.Arguments = args;
-            startInfo.WorkingDirectory = dir;
             process.StartInfo = startInfo;
             process.Start();
             // Process.Start(pgm, args);
@@ -105,7 +109,17 @@ namespace CordovaGUI
         private void NewProject_Click(object sender, RoutedEventArgs e)
         {
             //throw new NotImplementedException();
+            string name;
+            string path;
 
+
+            FolderBrowserDialog folderDialog = new FolderBrowserDialog();
+            folderDialog.SelectedPath = "C:\\";
+
+            DialogResult result = folderDialog.ShowDialog();
+            path = folderDialog.SelectedPath;
+
+            System.Windows.Forms.MessageBox.Show(path);
         }
 
         private void Image_Click(object sender, RoutedEventArgs e)

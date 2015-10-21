@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CordovaGUI
 {
-    partial class Project : Session
+    partial class Project : MainWindow
     {
         private string name;
         private string path;
@@ -23,7 +23,7 @@ namespace CordovaGUI
         {
             path = projectPath;
             name = projectName;
-            createTime = UnixTimeNow(); //Inherited from Session
+            createTime = UnixTimeNow(); //Inherited from MainWindow
             buildTime = 0;
             createTimeString = createTime.ToString();
             buildTimeString = buildTime.ToString();
@@ -49,17 +49,9 @@ namespace CordovaGUI
         {
             return name;
         }
-        public void setName(string newName)
-        {
-            name = newName;
-        }
         public string getPath()
         {
             return path;
-        }
-        public void setPath(string newPath)
-        {
-            path = newPath;
         }
 
     }
