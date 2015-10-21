@@ -109,8 +109,8 @@ namespace CordovaGUI
         private void NewProject_Click(object sender, RoutedEventArgs e)
         {
             //throw new NotImplementedException();
-            string name;
-            string path;
+            string name = "NewProject";
+            string path = "C:\\";
 
 
             FolderBrowserDialog folderDialog = new FolderBrowserDialog();
@@ -119,7 +119,10 @@ namespace CordovaGUI
             DialogResult result = folderDialog.ShowDialog();
             path = folderDialog.SelectedPath;
 
-            System.Windows.Forms.MessageBox.Show(path);
+            //System.Windows.Forms.MessageBox.Show(path);
+
+            name = Microsoft.VisualBasic.Interaction.InputBox("Enter project name:", "Cordova", "NewProject", 200, 200);
+
         }
 
         private void Image_Click(object sender, RoutedEventArgs e)
