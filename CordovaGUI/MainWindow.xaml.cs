@@ -14,18 +14,31 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace CordovaGUI
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
     public partial class MainWindow : Window
     {
+        private string project;
+        private string path;
+        private long createTime;
+        private long buildTime;
+        private string buildTimeString;
+        private string cfgFile;
+        private string createTimeString;
+        private string cdpPath;
+        private string reverseDomain;
+        private string username;
         public Session CurrentSession;
 
         public MainWindow()
         {
+            
             InitializeComponent();
 
             image.Click += Image_Click;
@@ -87,7 +100,7 @@ namespace CordovaGUI
         private void UpdateCordova_Click(object sender, RoutedEventArgs e)
         {
             //throw new NotImplementedException();
-            submitCMD("npm", "install -g cordova@latest", "", true);
+            submitCMD("npm", "install -g cordova@latest", true);
             //Process.Start("npm", "install -g cordova@latest");
         }
 
@@ -119,9 +132,13 @@ namespace CordovaGUI
             DialogResult result = folderDialog.ShowDialog();
             path = folderDialog.SelectedPath;
 
+
             //System.Windows.Forms.MessageBox.Show(path);
 
             name = Microsoft.VisualBasic.Interaction.InputBox("Enter project name:", "Cordova", "NewProject", 200, 200);
+            name.Replace(' ', '_');
+            Session CurrentSession = new Session();
+            makeNewProject(name, path);
 
         }
 
@@ -129,6 +146,29 @@ namespace CordovaGUI
         {
             //throw new NotImplementedException();
             Process.Start("https://cordova.apache.org/");
+        }
+        public void makeNewProject(string projectName, string projectPath)
+        {
+            path = projectPath;
+            project = projectName;
+            createTime = UnixTimeNow(); //Inherited from MainWindow
+            buildTime = 0;
+            createTimeString = createTime.ToString();
+            buildTimeString = buildTime.ToString();
+            cdpPath = projectPath +"\\" + projectName + "\\" + projectName + ".cdp";
+            username = Environment.UserName;
+            reverseDomain = "com." + username + "." + projectName;
+
+            //create project and .cdp file
+            //string toCMD1 = "cd " + projectPath;
+            //submitCMD("cmd.exe", toCMD1);
+            string toCMD2 = "create " + projectName + " " + reverseDomain + " " + projectName;
+            submitCMD("cordova", toCMD2, projectPath, true);
+            string[] lines = { project, reverseDomain, createTimeString, buildTimeString };
+            Thread.Sleep(5000);
+            System.IO.File.Create(cdpPath);
+            Thread.Sleep(2000);
+            System.IO.File.AppendAllLines(@cdpPath, lines);
         }
     }
 }
