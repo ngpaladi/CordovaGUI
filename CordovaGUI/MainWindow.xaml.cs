@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,37 +25,23 @@ namespace CordovaGUI
     /// 
     public partial class MainWindow : Window
     {
-        private string project;
-        private string path;
-        private long createTime;
-        private long buildTime;
-        private string buildTimeString;
-        private string cfgFile;
-        private string createTimeString;
-        private string cdpPath;
-        private string reverseDomain;
-        private string username;
+        private Project CurrentProject;
         public Session CurrentSession;
 
         public MainWindow()
         {
             
             InitializeComponent();
-
+            CurrentProject = new Project();
             image.Click += Image_Click;
             newProject.Click += NewProject_Click;
             openProject.Click += OpenProject_Click;
-            buildIOS.Click += BuildIOS_Click;
+            buildWindows.Click += BuildWindows_Click;
             buildAndroid.Click += BuildAndroid_Click;
             updateCordova.Click += UpdateCordova_Click;
 
 
 
-        }
-        public long UnixTimeNow()
-        {
-            var timeSpan = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
-            return (long)timeSpan.TotalSeconds;
         }
         public void submitCMD(string pgm, string args, string dir,  bool show)
         {
@@ -107,27 +94,46 @@ namespace CordovaGUI
         private void BuildAndroid_Click(object sender, RoutedEventArgs e)
         {
             //throw new NotImplementedException();
+            submitCMD("cordova", "platform add android", CurrentProject.getBuildPath(), true);
+            submitCMD("cordova", "build android", CurrentProject.getBuildPath(), true);
+            CurrentProject.buildUpdate();
         }
 
-        private void BuildIOS_Click(object sender, RoutedEventArgs e)
+        private void BuildWindows_Click(object sender, RoutedEventArgs e)
         {
             //throw new NotImplementedException();
+            submitCMD("cordova", "platform add windows", CurrentProject.getBuildPath(), true);
+            submitCMD("cordova", "build windows", CurrentProject.getBuildPath(), true);
+            CurrentProject.buildUpdate();
         }
 
         private void OpenProject_Click(object sender, RoutedEventArgs e)
         {
             //throw new NotImplementedException();
+            string path;
+            OpenFileDialog file = new OpenFileDialog();
+            file.InitialDirectory = "c:\\Users\\"+Environment.UserName+"\\Documents\\";
+            file.Filter = "cdp files (*.cdp)|*.cdp|All files (*.*)|*.*";
+            file.FilterIndex = 2;
+            file.RestoreDirectory = true;
+            file.ShowDialog();
+            //if (file.ShowDialog() == DialogResult.OK)
+            {
+                path = file.FileName;
+                string[] readText = File.ReadAllLines(path, Encoding.UTF8);
+                CurrentProject.loadProject(readText[0], readText[1], readText[2], readText[3], path);
+            }
         }
 
         private void NewProject_Click(object sender, RoutedEventArgs e)
         {
             //throw new NotImplementedException();
             string name = "NewProject";
-            string path = "C:\\";
+            string path = "c:\\Users\\" + Environment.UserName + "\\Documents\\";
 
 
             FolderBrowserDialog folderDialog = new FolderBrowserDialog();
-            folderDialog.SelectedPath = "C:\\";
+            folderDialog.SelectedPath = "c:\\Users\\" + Environment.UserName + "\\Documents\\";
 
             DialogResult result = folderDialog.ShowDialog();
             path = folderDialog.SelectedPath;
@@ -137,8 +143,14 @@ namespace CordovaGUI
 
             name = Microsoft.VisualBasic.Interaction.InputBox("Enter project name:", "Cordova", "NewProject", 200, 200);
             name.Replace(' ', '_');
-            Session CurrentSession = new Session();
-            makeNewProject(name, path);
+            //Project CurrentProject = new Project();
+            CurrentProject.makeNewProject(name, path);
+            submitCMD("cordova", CurrentProject.getCreateArgs(), CurrentProject.getPath(), true);
+            System.Threading.Thread.Sleep(5000);
+            string[] cdpText = { CurrentProject.getName(), CurrentProject.getPath(), CurrentProject.getCreateTimeStr(), CurrentProject.getBuildTimeStr()  };
+            System.Threading.Thread.Sleep(5000);
+            File.WriteAllLines(CurrentProject.getCdpPath(), cdpText, Encoding.UTF8);
+
 
         }
 
@@ -147,28 +159,6 @@ namespace CordovaGUI
             //throw new NotImplementedException();
             Process.Start("https://cordova.apache.org/");
         }
-        public void makeNewProject(string projectName, string projectPath)
-        {
-            path = projectPath;
-            project = projectName;
-            createTime = UnixTimeNow(); //Inherited from MainWindow
-            buildTime = 0;
-            createTimeString = createTime.ToString();
-            buildTimeString = buildTime.ToString();
-            cdpPath = projectPath +"\\" + projectName + "\\" + projectName + ".cdp";
-            username = Environment.UserName;
-            reverseDomain = "com." + username + "." + projectName;
-
-            //create project and .cdp file
-            //string toCMD1 = "cd " + projectPath;
-            //submitCMD("cmd.exe", toCMD1);
-            string toCMD2 = "create " + projectName + " " + reverseDomain + " " + projectName;
-            submitCMD("cordova", toCMD2, projectPath, true);
-            string[] lines = { project, reverseDomain, createTimeString, buildTimeString };
-            Thread.Sleep(5000);
-            System.IO.File.Create(cdpPath);
-            Thread.Sleep(2000);
-            System.IO.File.AppendAllLines(@cdpPath, lines);
-        }
+       
     }
 }
