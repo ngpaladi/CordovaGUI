@@ -32,6 +32,7 @@ namespace CordovaGUI
         {
             
             InitializeComponent();
+            CurrentSession = new Session();
             CurrentProject = new Project();
             image.Click += Image_Click;
             newProject.Click += NewProject_Click;
